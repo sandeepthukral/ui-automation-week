@@ -6,6 +6,11 @@
 // data. You might want to research different approaches to improving UI automation such as
 // Page Object Models.
 
+const loginPage = require('../pages/login');
+const RoomsPage = require('../pages/rooms');
+
+const assert = require('assert');
+
 describe('Challenge 2 tests', () => {
     beforeEach(() => {
         browser.reloadSession();
@@ -15,11 +20,7 @@ describe('Challenge 2 tests', () => {
     it('should be able to login', () => {
         browser.url('https://automationintesting.online/#/');
         $('a[href="/#/admin"]').click();
-        $('[data-testid="username"]').click();
-        $('[data-testid="username"]').setValue('admin');
-        $('[data-testid="password"]').setValue('password');
-
-        $('[data-testid="submit"]').click();
+        loginPage.loginAsAdmin();
 
         const element = $('=Rooms');
         
@@ -28,21 +29,26 @@ describe('Challenge 2 tests', () => {
     //Test two: Check to see if rooms are saved and displayed in the UI
     it('should be able to save rooms', () => {
         browser.url('https://automationintesting.online/#/')
-        $('//a[@href=\"/#/admin\"]').click();
-        $('//div[@class=\"form-group\"][1]/input').setValue('admin');
-        $('//div[@class=\"form-group\"][2]/input').setValue('password');
+        $('a[href="/#/admin"]').click();
+        loginPage.loginAsAdmin();
 
-        $('button.float-right').click();
+        const roomsPage = new RoomsPage();
+        const countOfRoomsBeforeTest = $$('[data-type="room"]').length;
 
-        $('.room-form > div:nth-child(1) input').setValue('101');
-        $('.room-form > div:nth-child(4) input').setValue('101');
+        const roomNumber = roomsPage.getRandomRoomNumber();
+        const roomPrice = roomsPage.getRandomRoomPrice();
+        roomsPage.createRoom(roomNumber, roomPrice);
 
-        browser.pause(2000);
-        $('button.btn-outline-primary').click();
-
-        // browser.debug();
-
-        // assertThat(driver.findElements(By.className(".detail")).size(), not(1));
+        $(`#roomNumber${roomNumber}`).waitForDisplayed({ timeout: 2000});
+        $(`#roomPrice${roomPrice}`).waitForDisplayed();
+        
+        // TODO not sure if this is really an important check
+        const countOfRoomsAfterTest = $$('[data-type="room"]').length;
+        assert.strictEqual(
+            countOfRoomsAfterTest, 
+            countOfRoomsBeforeTest + 1, 
+            "The count of rooms has not changed as expected"
+        );
     })
 
 
