@@ -20,13 +20,11 @@ describe('Challenge 2 tests', () => {
     })
 
     // Test one: Check to see if you can log in with valid credentials
-    it('should be able to login', () => {
-        browser.url('https://automationintesting.online/#/');
-        $('a[href="/#/admin"]').click();
-        loginPage.loginAsAdmin();
-
-        const element = $('=Rooms');
-        
+    it.only('should be able to login', () => {
+        masterPage
+            .visit()
+            .visitAdminPage()
+            .loginAsAdmin();
     })
 
     //Test two: Check to see if rooms are saved and displayed in the UI
