@@ -1,5 +1,6 @@
 const BrandingPage = require('./branding');
 const LoginPage = require('./login');
+const MessagesPage = require('./messages');
 
 class MasterPage {
 
@@ -21,6 +22,10 @@ class MasterPage {
     visitAdminPage() {
         browser.url('https://automationintesting.online/#/admin');
         return new LoginPage();
+    }
+    visitAdminMessagesPage() {
+        browser.url('https://automationintesting.online/#/admin/messages');
+        return new MessagesPage();
     }
 
     visitBrandingPage() {

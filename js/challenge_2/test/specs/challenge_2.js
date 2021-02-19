@@ -6,11 +6,7 @@
 // data. You might want to research different approaches to improving UI automation such as
 // Page Object Models.
 
-const loginPage = require('../pages/login');
-const RoomsPage = require('../pages/rooms');
-const BrandingPage = require('../pages/branding');
 const masterPage = require('../pages/masterPage');
-const assert = require('assert');
 
 import { getRandomRoomNumber, getRandomRoomPrice, getRandomName, getRandomEmail, getRandomPhoneNumber, getRandomSubject, getRandomMessage } from "../utils/utils";
 
@@ -68,16 +64,13 @@ describe('Challenge 2 tests', () => {
 
     // Test five: Check to see if unread messages are bolded
     it('should see unread messages are bolded', () => {
-        browser.url('https://automationintesting.online/#/admin/messages')
+        masterPage
+            .visitAdminPage()
+            .loginAsAdmin();
 
-        $('//div[@class=\"form-group\"][1]/input').setValue('admin');
-        $('//div[@class=\"form-group\"][2]/input').setValue('password');
-
-        $('button.float-right').click();
-
-        browser.pause(2000);
-
-        expect($$('div.read-false').length).toBeGreaterThanOrEqual(1);
+        masterPage
+            .visitAdminMessagesPage()
+            .verifyAtLeastOneUnreadMessageExists();
     })
 
 
