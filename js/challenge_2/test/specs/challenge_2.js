@@ -12,6 +12,7 @@ const BrandingPage = require('../pages/branding');
 const masterPage = require('../pages/masterPage');
 const assert = require('assert');
 
+import { getRandomRoomNumber, getRandomRoomPrice } from "../utils/utils";
 
 describe('Challenge 2 tests', () => {
     beforeEach(() => {
@@ -30,36 +31,20 @@ describe('Challenge 2 tests', () => {
 
     //Test two: Check to see if rooms are saved and displayed in the UI
     it('should be able to save rooms', () => {
-        // browser.url('https://automationintesting.online/#/')
-        // $('a[href="/#/admin"]').click();
+        const roomNumber = getRandomRoomNumber();
+        const roomPrice = getRandomRoomPrice();
+
         masterPage
             .visit()
             .openAdminPanel()
-            .loginAsAdmin();
-
-        const roomsPage = new RoomsPage();
-        const countOfRoomsBeforeTest = roomsPage.roomEntries.length;
-
-        const roomNumber = roomsPage.getRandomRoomNumber();
-        const roomPrice = roomsPage.getRandomRoomPrice();
-        roomsPage.createRoom(roomNumber, roomPrice);
-
-        // TODO See if I can move these selectors to the Page Object
-        $(`#roomNumber${roomNumber}`).waitForDisplayed({ timeout: 2000});
-        $(`#roomPrice${roomPrice}`).waitForDisplayed();
-        
-        // TODO not sure if this is really an important check
-        const countOfRoomsAfterTest = roomsPage.roomEntries.length;
-        assert.strictEqual(
-            countOfRoomsAfterTest, 
-            countOfRoomsBeforeTest + 1, 
-            "The count of rooms has not changed as expected"
-        );
+            .loginAsAdmin()
+            .createRoom(roomNumber, roomPrice)
+            .verifyNewRoomEntryIsDisplayed();
     })
 
 
     // Test three: Check to see the confirm message appears when branding is updated
-    it.only('should be able to update branding', () => {
+    it('should be able to update branding', () => {
         // browser.url('https://automationintesting.online/#/admin')
         masterPage.visitAdminPage().loginAsAdmin();
 
