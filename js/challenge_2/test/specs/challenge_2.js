@@ -12,7 +12,7 @@ const BrandingPage = require('../pages/branding');
 const masterPage = require('../pages/masterPage');
 const assert = require('assert');
 
-import { getRandomRoomNumber, getRandomRoomPrice, getRandomName } from "../utils/utils";
+import { getRandomRoomNumber, getRandomRoomPrice, getRandomName, getRandomEmail, getRandomPhoneNumber, getRandomSubject, getRandomMessage } from "../utils/utils";
 
 describe('Challenge 2 tests', () => {
     beforeEach(() => {
@@ -54,18 +54,16 @@ describe('Challenge 2 tests', () => {
 
     // Test four: Check to see if the contact form shows a success message
      it('should see success message', () => {
-        browser.url('https://automationintesting.online')
-
-        $('input[placeholder=\"Name\"]').setValue('TEST123');
-        $('input[placeholder=\"Email\"]').setValue('TEST123@TEST.COM');
-        $('input[placeholder=\"Phone\"]').setValue('01212121311');
-        $('input[placeholder=\"Subject\"]').setValue('TEsTEST');
-        $('textarea').setValue('TEsTESTTEsTESTTEsTEST');
-
-        $("//button[text()=\"Submit\"]").click();
-
-        browser.pause(3000);
-        expect($("div.contact").getText()).toContain('Thanks for getting in touch')
+        masterPage
+            .visit()
+            .submitContactForm(
+                getRandomName(),
+                getRandomEmail(),
+                getRandomPhoneNumber(),
+                getRandomSubject(),
+                getRandomMessage()
+            )
+            .verifyContactFormIsSubmitted();
     })
 
     // Test five: Check to see if unread messages are bolded

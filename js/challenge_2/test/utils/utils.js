@@ -12,3 +12,19 @@ export function getRandomRoomPrice() {
 export function getRandomName() { 
     return chance.word({ length: 8 }); 
 }
+
+export function getRandomEmail() {
+    return chance.email({domain: 'thisdoesnotexist.com'})
+}
+
+export function getRandomSubject() {
+    return chance.sentence({words: 3}).slice(0,19);
+}
+
+export function getRandomMessage() {
+    return chance.sentence({words: 10});
+}
+
+export function getRandomPhoneNumber() {
+    return chance.integer({ min:60000000000, max:90000000000 })
+}
