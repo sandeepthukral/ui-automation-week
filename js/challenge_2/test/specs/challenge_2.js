@@ -6,9 +6,9 @@
 // data. You might want to research different approaches to improving UI automation such as
 // Page Object Models.
 
-const masterPage = require('../pages/masterPage');
+import { getRandomRoomNumber, getRandomRoomPrice, getRandomName, getRandomEmail, getRandomPhoneNumber, getRandomSubject, getRandomMessage, createMessage } from "../utils/utils";
 
-import { getRandomRoomNumber, getRandomRoomPrice, getRandomName, getRandomEmail, getRandomPhoneNumber, getRandomSubject, getRandomMessage } from "../utils/utils";
+const masterPage = require('../pages/masterPage');
 
 describe('Challenge 2 tests', () => {
     beforeEach(() => {
@@ -64,6 +64,10 @@ describe('Challenge 2 tests', () => {
 
     // Test five: Check to see if unread messages are bolded
     it('should see unread messages are bolded', () => {
+
+        // Create an unread message by calling the backend endpoint
+        createMessage();
+
         masterPage
             .visitAdminPage()
             .loginAsAdmin();
