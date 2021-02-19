@@ -1,18 +1,18 @@
+const Chance = require('chance');
 class RoomsPage {
+    chance = new Chance();
 
     get roomNumberInput() { return $('#roomNumber') }
     get roomPriceInput() { return $('#roomPrice') }
     get createRoomButton() { return $('#createRoom') }
+    get roomEntries() { return $$('[data-type="room"]') }
 
     constructor() {
         this.roomNumberInput.waitForDisplayed({timeout: 3000});
     }
-    _getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
-    }
 
     getRandomRoomNumber() {
-        return `${this._getRandomInt(9)}${this._getRandomInt(9)}${this._getRandomInt(9)}`
+        return this.chance.integer({ min: 101, max: 999 });
     }
 
     getRandomRoomPrice() {

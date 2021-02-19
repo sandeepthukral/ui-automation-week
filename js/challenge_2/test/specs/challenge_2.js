@@ -8,8 +8,10 @@
 
 const loginPage = require('../pages/login');
 const RoomsPage = require('../pages/rooms');
-
+const BrandingPage = require('../pages/branding');
+const masterPage = require('../pages/masterPage');
 const assert = require('assert');
+
 
 describe('Challenge 2 tests', () => {
     beforeEach(() => {
@@ -28,22 +30,26 @@ describe('Challenge 2 tests', () => {
 
     //Test two: Check to see if rooms are saved and displayed in the UI
     it('should be able to save rooms', () => {
-        browser.url('https://automationintesting.online/#/')
-        $('a[href="/#/admin"]').click();
-        loginPage.loginAsAdmin();
+        // browser.url('https://automationintesting.online/#/')
+        // $('a[href="/#/admin"]').click();
+        masterPage
+            .visit()
+            .openAdminPanel()
+            .loginAsAdmin();
 
         const roomsPage = new RoomsPage();
-        const countOfRoomsBeforeTest = $$('[data-type="room"]').length;
+        const countOfRoomsBeforeTest = roomsPage.roomEntries.length;
 
         const roomNumber = roomsPage.getRandomRoomNumber();
         const roomPrice = roomsPage.getRandomRoomPrice();
         roomsPage.createRoom(roomNumber, roomPrice);
 
+        // TODO See if I can move these selectors to the Page Object
         $(`#roomNumber${roomNumber}`).waitForDisplayed({ timeout: 2000});
         $(`#roomPrice${roomPrice}`).waitForDisplayed();
         
         // TODO not sure if this is really an important check
-        const countOfRoomsAfterTest = $$('[data-type="room"]').length;
+        const countOfRoomsAfterTest = roomsPage.roomEntries.length;
         assert.strictEqual(
             countOfRoomsAfterTest, 
             countOfRoomsBeforeTest + 1, 
@@ -53,27 +59,22 @@ describe('Challenge 2 tests', () => {
 
 
     // Test three: Check to see the confirm message appears when branding is updated
-    it('should be able to update branding', () => {
-        browser.url('https://automationintesting.online/#/admin')
-        $('//div[@class=\"form-group\"][1]/input').setValue('admin');
-        $('//div[@class=\"form-group\"][2]/input').setValue('password');
+    it.only('should be able to update branding', () => {
+        // browser.url('https://automationintesting.online/#/admin')
+        masterPage.visitAdminPage().loginAsAdmin();
 
-        $('button.float-right').click();
+        masterPage
+            .visitBrandingPage();
+            // .setName(this.randomName())
+            // .submitForm()
+            // .confirmModalCloseButton.waitForDisplayed();
 
-        browser.url('https://automationintesting.online/#/admin/branding');
+        const brandingPage = new BrandingPage();
+        const newName = brandingPage.randomName;
+        brandingPage.setName(newName);
+        brandingPage.submitForm();
 
-    
-        $('input.form-control').setValue("Test");
-        $('button.btn-outline-primary').click();
-
-        browser.pause(1000);
-        const elementCount = $$('//button[text()="Close"]').length;
-
-        if (elementCount === 1) { 
-            expect(true).toBe(true)
-        } else {
-            expect(true).toBe(false)
-        }
+        brandingPage.confirmModalCloseButton.waitForDisplayed();
     })
 
     // Test four: Check to see if the contact form shows a success message
