@@ -8,8 +8,6 @@ class BrandingPage {
     get submitButton() { return $('#updateBranding') }
     get confirmModalCloseButton() { return $('//button[text()="Close"]') }
 
-    get randomName() { return this.chance.animal() }
-
     constructor() {
         this.nameInput.waitForDisplayed();
     }
@@ -23,6 +21,10 @@ class BrandingPage {
     submitForm() {
         this.submitButton.click();
         return this;
+    }
+
+    verifyModalCloseButtonIsDisplayed() {
+        this.confirmModalCloseButton.waitForDisplayed();
     }
 
 }

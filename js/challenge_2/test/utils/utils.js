@@ -8,3 +8,7 @@ export function getRandomRoomNumber() {
 export function getRandomRoomPrice() {
     return getRandomRoomNumber();
 }
+
+export function getRandomName() { 
+    return chance.word({ length: 8 }); 
+}

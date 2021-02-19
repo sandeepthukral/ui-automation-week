@@ -12,7 +12,7 @@ const BrandingPage = require('../pages/branding');
 const masterPage = require('../pages/masterPage');
 const assert = require('assert');
 
-import { getRandomRoomNumber, getRandomRoomPrice } from "../utils/utils";
+import { getRandomRoomNumber, getRandomRoomPrice, getRandomName } from "../utils/utils";
 
 describe('Challenge 2 tests', () => {
     beforeEach(() => {
@@ -20,9 +20,8 @@ describe('Challenge 2 tests', () => {
     })
 
     // Test one: Check to see if you can log in with valid credentials
-    it.only('should be able to login', () => {
+    it('should be able to login', () => {
         masterPage
-            .visit()
             .visitAdminPage()
             .loginAsAdmin();
     })
@@ -44,20 +43,13 @@ describe('Challenge 2 tests', () => {
     // Test three: Check to see the confirm message appears when branding is updated
     it('should be able to update branding', () => {
         // browser.url('https://automationintesting.online/#/admin')
+        const newName = getRandomName();
         masterPage.visitAdminPage().loginAsAdmin();
-
         masterPage
-            .visitBrandingPage();
-            // .setName(this.randomName())
-            // .submitForm()
-            // .confirmModalCloseButton.waitForDisplayed();
-
-        const brandingPage = new BrandingPage();
-        const newName = brandingPage.randomName;
-        brandingPage.setName(newName);
-        brandingPage.submitForm();
-
-        brandingPage.confirmModalCloseButton.waitForDisplayed();
+            .visitBrandingPage()
+            .setName(newName)
+            .submitForm()
+            .verifyModalCloseButtonIsDisplayed();
     })
 
     // Test four: Check to see if the contact form shows a success message
