@@ -1,3 +1,5 @@
+const { join } = require('path');
+
 exports.config = {
     //
     // ====================
@@ -106,7 +108,21 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver'],
+    services: [
+        'chromedriver',
+        ['image-comparison',
+        // The options
+        {
+            // Some options, see the docs for more
+            baselineFolder: join(process.cwd(), './test/baseline/'),
+            formatImageName: '{tag}-{logName}-{width}x{height}',
+            screenshotPath: join(process.cwd(), 'screenshots/'),
+            savePerInstance: true,
+            autoSaveBaseline: true,
+            blockOutStatusBar: true,
+            blockOutToolBar: true,
+        }]
+    ],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber

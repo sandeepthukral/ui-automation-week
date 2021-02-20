@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "rimraf screenshots; wdio wdio.conf.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,8 @@
     "@wdio/spec-reporter": "^6.11.0",
     "@wdio/sync": "^6.11.0",
     "chromedriver": "^88.0.0",
-    "wdio-chromedriver-service": "^6.0.4"
+    "rimraf": "3.0.2",
+    "wdio-chromedriver-service": "^6.0.4",
+    "wdio-image-comparison-service": "^2.0.0"
   }
 }
