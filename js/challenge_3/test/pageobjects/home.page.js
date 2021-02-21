@@ -6,6 +6,8 @@ class HomePage {
     get imgMaps () { return $$('.map img') }
     get map() { return $('.map') }
     get firstRoom() { return $$('.hotel-room-info')[0] }
+    get bannerSection() { return $('#collapseBanner')}
+    get contactSection() { return $('.contact') }
 
     visit() {
         browser.url('https://automationintesting.online/');

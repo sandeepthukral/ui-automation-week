@@ -118,7 +118,7 @@ exports.config = {
             formatImageName: '{tag}-{logName}-{width}x{height}',
             screenshotPath: join(process.cwd(), 'screenshots/'),
             savePerInstance: true,
-            autoSaveBaseline: true,
+            autoSaveBaseline: false,
             blockOutStatusBar: true,
             blockOutToolBar: true,
         }]
