@@ -1,6 +1,6 @@
-const BrandingPage = require('./branding');
-const LoginPage = require('./login');
-const MessagesPage = require('./messages');
+const BrandingPage = require('./brandingPage');
+const LoginPage = require('./loginPage');
+const MessagesPage = require('./messagesPage');
 
 class MasterPage {
 

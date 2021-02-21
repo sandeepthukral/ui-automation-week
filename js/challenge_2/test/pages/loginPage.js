@@ -1,4 +1,4 @@
-const RoomsPage = require('./rooms')
+const RoomsPage = require('./roomsPage')
 class LoginPage {
     get username() { return $('[data-testid="username"]') }
     get password() { return $('[data-testid="password"]') }
