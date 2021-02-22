@@ -30,7 +30,7 @@ export function getRandomPhoneNumber() {
     return chance.integer({ min:60000000000, max:90000000000 })
 }
 
-export function createMessage() {
+export function createMessageViaApi() {
     const payload = {
         "name": getRandomName(),
         "email": getRandomEmail(),

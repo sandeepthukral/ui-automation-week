@@ -6,7 +6,7 @@
 // data. You might want to research different approaches to improving UI automation such as
 // Page Object Models.
 
-import { getRandomRoomNumber, getRandomRoomPrice, getRandomName, getRandomEmail, getRandomPhoneNumber, getRandomSubject, getRandomMessage, createMessage } from "../utils/utils";
+import { getRandomRoomNumber, getRandomRoomPrice, getRandomName, getRandomEmail, getRandomPhoneNumber, getRandomSubject, getRandomMessage, createMessageViaApi } from "../utils/utils";
 
 const masterPage = require('../pages/masterPage');
 
@@ -37,8 +37,7 @@ describe('Challenge 2 tests', () => {
 
 
     // Test three: Check to see the confirm message appears when branding is updated
-    it('should be able to update branding', () => {
-        // browser.url('https://automationintesting.online/#/admin')
+    it('should be able to update the branding information', () => {
         const newName = getRandomName();
         masterPage.visitAdminPage().loginAsAdmin();
         masterPage
@@ -49,7 +48,7 @@ describe('Challenge 2 tests', () => {
     })
 
     // Test four: Check to see if the contact form shows a success message
-     it('should see success message', () => {
+     it('should be able to send a message from the contact form', () => {
         masterPage
             .visit()
             .submitContactForm(
@@ -66,8 +65,9 @@ describe('Challenge 2 tests', () => {
     it('should see unread messages are bolded', () => {
 
         // Create an unread message by calling the backend endpoint
-        createMessage();
+        createMessageViaApi();
 
+        // now verify that the message is unread
         masterPage
             .visitAdminPage()
             .loginAsAdmin();

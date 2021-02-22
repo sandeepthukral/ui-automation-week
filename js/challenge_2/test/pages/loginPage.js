@@ -5,11 +5,9 @@ class LoginPage {
     get submitButton() { return $('[data-testid="submit"]') } 
     
     loginAsAdmin() {
-        $('[data-testid="username"]').click();
-        $('[data-testid="username"]').setValue('admin');
-        $('[data-testid="password"]').setValue('password');
-    
-        $('[data-testid="submit"]').click();
+        this.username.setValue('admin');
+        this.password.setValue('password');
+        this.submitButton.click();
         return new RoomsPage();
     }
 }
